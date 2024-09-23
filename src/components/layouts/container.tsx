@@ -17,15 +17,17 @@ const Container: FC<ContainerProps> = ({
   containerClassName,
   color,
   padding = "normal",
-  centered = true,
+  centered = false,
   spaceChildren = true,
 }) => {
   const getColorClasses = () => {
     switch (color) {
       case "accent":
-        return ["bg-accent/45 border-muted text-foreground"];
+        return [
+          "bg-zinc-500/70 border-zinc-400 text-zinc-50 dark:bg-zinc-100 dark:border-zinc-200 dark:text-zinc-900",
+        ];
       case "red":
-        return ["text-destructive bg-destructive/20 border-red"];
+        return ["text-zinc-50 bg-red-500/20 border-red-500"];
       default:
         return [];
     }
