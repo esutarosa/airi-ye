@@ -5,7 +5,7 @@ import { Navbar } from "@/components/navbar";
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
-      <Navbar isHideNavbar />
+      <Navbar />
       <main>{children}</main>
     </>
   );
