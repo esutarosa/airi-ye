@@ -1,12 +1,7 @@
 import type { FC } from "react";
-import { useNavbar } from "@/components/navbar/navbar-context";
 import Link from "next/link";
 
 const NavbarDesktop: FC = () => {
-  const { isHideNavbar } = useNavbar();
-
-  if (isHideNavbar) return null;
-
   return (
     <div className="container flex h-14 items-center">
       <nav className="flex w-full items-center justify-between">
