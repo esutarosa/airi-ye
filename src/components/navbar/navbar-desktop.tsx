@@ -5,7 +5,7 @@ import { FiGithub } from "react-icons/fi";
 
 const NavbarDesktop: FC = () => {
   return (
-    <div className="container flex h-14 items-center">
+    <div className="container flex h-14 items-center border-b border-content1">
       <div className="flex w-full items-center justify-between">
         <Logo />
         <nav className="flex items-center space-x-4">
