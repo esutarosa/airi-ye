@@ -1,10 +1,13 @@
 import type { FC } from "react";
 import Layout from "@/components/layouts/layout";
+import { Course, CourseProvider } from "@/components/course";
 
 const HomePage: FC = () => {
   return (
     <Layout>
-      <div>Third page</div>
+      <CourseProvider>
+        <Course />
+      </CourseProvider>
     </Layout>
   );
 };
