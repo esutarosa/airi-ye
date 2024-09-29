@@ -1,6 +1,7 @@
 "use client";
 
 import type { FC } from "react";
+
 import { navItems } from "@/config/data";
 import { Link } from "@nextui-org/link";
 import { usePathname } from "next/navigation";
@@ -16,7 +17,7 @@ const SidebarItems: FC = () => {
             key={idx}
             href={item.href}
             className={cn(
-              "text-foreground/50 gap-3 rounded-lg transition-all hover:text-foreground px-3 py-2",
+              "text-foreground/50 gap-3 rounded-lg transition-all hover:text-foreground hover:bg-content1 px-3 py-2",
               pathname === item.href && "bg-foreground text-background",
             )}
           >
