@@ -1,13 +1,16 @@
 import type { FC, PropsWithChildren } from "react";
-
 import { Navbar } from "@/components/navbar";
+import { Sidebar } from "@/components/sidebar";
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <>
-      <Navbar />
-      <main>{children}</main>
-    </>
+    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[200px_1fr]">
+      <Sidebar />
+      <div className="flex flex-col">
+        <Navbar />
+        <main>{children}</main>
+      </div>
+    </div>
   );
 };
 
