@@ -3,7 +3,7 @@ import { Users, AlignLeft, Book } from "lucide-react";
 export const navItems = [
   {
     label: "Студенти",
-    href: "/users",
+    href: "/students",
     icon: <Users className="w-4 h-4" />,
   },
   {
