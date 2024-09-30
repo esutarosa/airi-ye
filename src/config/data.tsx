@@ -1,6 +1,12 @@
 import { Users, AlignLeft, Book } from "lucide-react";
 
-export const navItems = [
+type NavItem = {
+  label: string;
+  href: string;
+  icon: JSX.Element;
+};
+
+export const navItems: NavItem[] = [
   {
     label: "Студенти",
     href: "/students",

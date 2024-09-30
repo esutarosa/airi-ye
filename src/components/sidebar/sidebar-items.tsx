@@ -11,7 +11,7 @@ const SidebarItems: FC = () => {
   const pathname = usePathname();
   return (
     <div className="flex-1">
-      <div className="grid items-start px-2 text-sm font-medium lg:px-4">
+      <div className="grid items-start px-2 gap-1 text-sm font-medium lg:px-4">
         {navItems.map((item, idx) => (
           <Link
             key={idx}
