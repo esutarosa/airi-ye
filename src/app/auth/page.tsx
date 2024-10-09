@@ -1,10 +1,11 @@
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
+import { AuthForm } from "@/components/auth";
 
 const AuthPage: FC = () => {
   return (
-    <div>
-      <div>AuthPage</div>
-    </div>
+    <Suspense fallback={<>Loading...</>}>
+      <AuthForm />
+    </Suspense>
   );
 };
 

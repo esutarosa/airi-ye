@@ -6,17 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "migration:generate": "drizzle-kit generate:pg",
-    "migration:push": "drizzle-kit push:pg"
+    "lint": "next lint"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.6.1",
+    "@hookform/resolvers": "^3.9.0",
     "@neondatabase/serverless": "^0.10.1",
     "@nextui-org/accordion": "^2.0.40",
     "@nextui-org/badge": "^2.0.32",
     "@nextui-org/button": "^2.0.38",
     "@nextui-org/card": "^2.0.34",
+    "@nextui-org/input": "^2.2.5",
     "@nextui-org/link": "^2.0.35",
     "@nextui-org/navbar": "^2.0.37",
     "@nextui-org/skeleton": "^2.0.32",
