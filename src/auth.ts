@@ -20,7 +20,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
+        if (!credentials || !credentials.email || !credentials.password) {
           return null;
         }
 
@@ -44,5 +44,48 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  callbacks: {},
+  callbacks: {
+    authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user;
+      const paths = ["/profile", "/api/session"];
+
+      // Проверка на наличие nextUrl и его pathname
+      if (!nextUrl || !nextUrl.pathname) {
+        return false;
+      }
+
+      const isProtected = paths.some((path) =>
+        nextUrl.pathname.startsWith(path),
+      );
+
+      if (isProtected && !isLoggedIn) {
+        const redirectUrl = new URL("/login", nextUrl.origin);
+        redirectUrl.searchParams.append("callbackUrl", nextUrl.href);
+        return Response.redirect(redirectUrl);
+      }
+      return true;
+    },
+    jwt: ({ token, user }) => {
+      if (user) {
+        const u = user as unknown as any;
+        return {
+          ...token,
+          id: u.id,
+          randomKey: u.randomKey,
+        };
+      }
+      return token;
+    },
+    // Callback для сессий
+    session(params) {
+      return {
+        ...params.session,
+        user: {
+          ...params.session.user,
+          id: params.token.id as string,
+          randomKey: params.token.randomKey,
+        },
+      };
+    },
+  },
 });
