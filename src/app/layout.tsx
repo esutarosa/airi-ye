@@ -2,6 +2,8 @@ import type { FC, PropsWithChildren } from "react";
 import type { Metadata } from "next";
 
 import { NextUIProvider } from "@/providers";
+import { Toaster } from "react-hot-toast";
+
 import { BASE_URL, SITE_DESCRIPTION, SITE_TITLE } from "@/config/site";
 
 import "@/styles/global.css";
@@ -28,7 +30,10 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="uk" suppressHydrationWarning>
       <body>
-        <NextUIProvider>{children}</NextUIProvider>
+        <NextUIProvider>
+          {children}
+          <Toaster />
+        </NextUIProvider>
       </body>
     </html>
   );
