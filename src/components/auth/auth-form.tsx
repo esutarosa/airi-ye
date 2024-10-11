@@ -1,121 +1,75 @@
 "use client";
 
-import { type FC, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter, useSearchParams } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
-import {
-  type AuthFormSchemaType,
-  authFormSchema,
-} from "@/definitions/auth-form-schema";
-import { signIn } from "next-auth/react";
-import { toast } from "react-hot-toast";
-import { Card, CardBody } from "@nextui-org/card";
-import { Container } from "@/components/layouts";
-import { Button } from "@nextui-org/button";
+import { type FC, useLayoutEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Input } from "@nextui-org/input";
+import { Button } from "@nextui-org/button";
+import {
+  type AuthFormInput,
+  AuthFormSchema,
+} from "@/definitions/auth-form-schema";
+import { Container } from "@/components/layouts";
+import { Mail, KeyRound, Eye, EyeOff } from "lucide-react";
 
 const AuthForm: FC = () => {
-  const router = useRouter();
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const [error, setError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/profile";
-
-  const methods = useForm<AuthFormSchemaType>({
-    resolver: zodResolver(authFormSchema),
-  });
-
-  const {
-    reset,
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = methods;
-
-  const onSubmitHandler: SubmitHandler<AuthFormSchemaType> = async (values) => {
-    try {
-      setSubmitting(true);
-
-      const res = await signIn("credentials", {
-        redirect: false,
-        email: values.email,
-        password: values.password,
-        redirectTo: callbackUrl,
-      });
-
-      setSubmitting(false);
-
-      if (!res?.error) {
-        toast.success("successfully logged in");
-        router.push(callbackUrl);
-      } else {
-        reset({ password: "" });
-        const message = "invalid email or password";
-        toast.error(message);
-        setError(message);
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      toast.error(error.message);
-      setError(error.message);
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  const emailRef = useRef<HTMLInputElement>(null);
+  useLayoutEffect(() => {
+    emailRef.current?.focus();
+  }, []);
 
   return (
-    <Container centered containerClassName="min-h-[70vh] justify-center">
-      <Card className="max-w-full w-[340px]">
-        <CardBody className="overflow-hidden">
-          <form
-            className="flex flex-col gap-4"
-            onSubmit={handleSubmit(onSubmitHandler)}
-          >
-            {error && (
-              <p className="text-center bg-red-300 py-4 mb-6 rounded">
-                {error}
-              </p>
-            )}
-            <Input
-              isRequired
-              label="Email"
-              {...register("email")}
-              placeholder="Enter your nyan email"
-              type="email"
-            />
-            {errors["email"] && (
-              <span className="text-red-500 text-xs pt-1 block">
-                {errors["email"]?.message as string}
-              </span>
-            )}
-            <Input
-              isRequired
-              label="Password"
-              {...register("password")}
-              placeholder="Enter your super nyan password"
-              type="password"
-            />
-            {errors["password"] && (
-              <span className="text-red-500 text-xs pt-1 block">
-                {errors["password"]?.message as string}
-              </span>
-            )}
-            <div className="flex gap-2 justify-end">
-              <Button
-                fullWidth
-                type="submit"
-                disabled={submitting}
-                color="primary"
+    <Container>
+      <form className="flex flex-col">
+        <div className="w-full flex flex-col space-y-6">
+          <Input
+            ref={emailRef}
+            type="email"
+            variant="underlined"
+            labelPlacement="outside"
+            startContent={
+              <Mail className="text-default-400 size-6 pointer-events-none" />
+            }
+            endContent={
+              <div className="pointer-events-none flex items-center">
+                <span className="text-default-400 text-small select-none">
+                  @gmail.com
+                </span>
+              </div>
+            }
+            name="email"
+            placeholder="Email"
+          />
+          <Input
+            type={isVisible ? "text" : "password"}
+            variant="underlined"
+            labelPlacement="outside"
+            startContent={
+              <KeyRound className="text-default-400 size-6 pointer-events-none" />
+            }
+            endContent={
+              <button
+                className="focus:outline-none"
+                type="button"
+                onClick={toggleVisibility}
+                aria-label="toggle password visibility"
               >
-                {submitting ? "Loading..." : "Login"}
-              </Button>
-            </div>
-          </form>
-        </CardBody>
-      </Card>
+                {isVisible ? (
+                  <EyeOff className="size-5 text-default-400 pointer-events-none" />
+                ) : (
+                  <Eye className="size-5 text-default-400 pointer-events-none" />
+                )}
+              </button>
+            }
+            name="password"
+            placeholder="Password"
+          />
+          <Button variant="flat">Nya!</Button>
+        </div>
+      </form>
     </Container>
   );
 };
