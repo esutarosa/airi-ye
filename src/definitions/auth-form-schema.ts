@@ -1,13 +1,15 @@
-import { TypeOf, object, string } from "zod";
+import { object, pipe, string, nonEmpty, email, InferInput } from "valibot";
 
-export const authFormSchema = object({
-  email: string({ required_error: "Email is required" })
-    .min(1, "Email is required")
-    .email("Invalid email or password"),
-  password: string({ required_error: "Password is required" }).min(
-    1,
-    "Password is required",
+export const AuthFormSchema = object({
+  email: pipe(
+    string("Ваш email має бути рядком."),
+    nonEmpty("Будь ласка, введіть ваш email."),
+    email("Email-адреса неправильно відформатована."),
+  ),
+  password: pipe(
+    string("Ваш пароль має бути рядком."),
+    nonEmpty("Будь ласка, введіть ваш пароль."),
   ),
 });
 
-export type AuthFormSchemaType = TypeOf<typeof authFormSchema>;
+export type AuthFormInput = InferInput<typeof AuthFormSchema>;
