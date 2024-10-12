@@ -1,6 +1,6 @@
 "use client";
 
-import { type FC, useLayoutEffect, useRef, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Input } from "@nextui-org/input";
@@ -12,30 +12,48 @@ import {
 import { Container } from "@/components/layouts";
 import { Mail, KeyRound, Eye, EyeOff } from "lucide-react";
 import { signinUserAction } from "@/actions/auth/signin-user-action";
+import { toast } from "react-hot-toast";
 
 const AuthForm: FC = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  // const emailRef = useRef<HTMLInputElement>(null);
-  // useLayoutEffect(() => {
-  //   emailRef.current?.focus();
-  // }, []);
+  const { register, handleSubmit, setError, setFocus, formState } =
+    useForm<AuthFormInput>({
+      resolver: valibotResolver(AuthFormSchema),
+      defaultValues: { email: "", password: "" },
+    });
 
-  const { register, handleSubmin } = useForm<AuthFormInput>({});
+  useEffect(() => {
+    setFocus("email");
+  }, [setFocus]);
 
-  const submit = (data: AuthFormInput) => {
-    console.log("Form Data:", data);
+  const submit = async (values: AuthFormInput) => {
+    const res = await signinUserAction(values);
+
+    if (res.success) {
+      window.location.href = "/profile";
+    } else {
+      switch (res.statusCode) {
+        case 401:
+          setError("password", { message: res.error });
+          toast.error(res.error);
+          break;
+        case 500:
+        default:
+          const error = res.error || "Internal Server Error";
+          setError("password", { message: error });
+          toast.error(error);
+      }
+    }
   };
 
   return (
     <Container>
-      <form className="flex flex-col">
+      <form className="flex flex-col" onSubmit={handleSubmit(submit)}>
         <div className="w-full flex flex-col space-y-6">
           <Input
             {...register("email")}
-            // ref={emailRef}
             type="email"
             variant="underlined"
             labelPlacement="outside"
@@ -77,7 +95,11 @@ const AuthForm: FC = () => {
             name="password"
             placeholder="Password"
           />
-          <Button type="submit" variant="flat" isLoading={isLoading}>
+          <Button
+            type="submit"
+            variant="flat"
+            isLoading={formState.isSubmitting}
+          >
             Nya!
           </Button>
         </div>
