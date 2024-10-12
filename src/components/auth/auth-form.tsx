@@ -11,22 +11,31 @@ import {
 } from "@/definitions/auth-form-schema";
 import { Container } from "@/components/layouts";
 import { Mail, KeyRound, Eye, EyeOff } from "lucide-react";
+import { signinUserAction } from "@/actions/auth/signin-user-action";
 
 const AuthForm: FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const emailRef = useRef<HTMLInputElement>(null);
-  useLayoutEffect(() => {
-    emailRef.current?.focus();
-  }, []);
+  // const emailRef = useRef<HTMLInputElement>(null);
+  // useLayoutEffect(() => {
+  //   emailRef.current?.focus();
+  // }, []);
+
+  const { register, handleSubmin } = useForm<AuthFormInput>({});
+
+  const submit = (data: AuthFormInput) => {
+    console.log("Form Data:", data);
+  };
 
   return (
     <Container>
       <form className="flex flex-col">
         <div className="w-full flex flex-col space-y-6">
           <Input
-            ref={emailRef}
+            {...register("email")}
+            // ref={emailRef}
             type="email"
             variant="underlined"
             labelPlacement="outside"
@@ -44,6 +53,7 @@ const AuthForm: FC = () => {
             placeholder="Email"
           />
           <Input
+            {...register("password")}
             type={isVisible ? "text" : "password"}
             variant="underlined"
             labelPlacement="outside"
@@ -67,7 +77,9 @@ const AuthForm: FC = () => {
             name="password"
             placeholder="Password"
           />
-          <Button variant="flat">Nya!</Button>
+          <Button type="submit" variant="flat" isLoading={isLoading}>
+            Nya!
+          </Button>
         </div>
       </form>
     </Container>
