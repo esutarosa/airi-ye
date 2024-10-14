@@ -35,4 +35,4 @@ const nextAuth = NextAuth({
   ],
 });
 
-export const { signIn, auth } = nextAuth;
+export const { signIn, signOut, auth } = nextAuth;
