@@ -24,6 +24,7 @@ const nextAuth = NextAuth({
           const passwordMatch = await argon2.verify(user.password, password);
 
           if (passwordMatch) {
+            /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
             const { password: _, ...userWithoutPassword } = user;
             return userWithoutPassword;
           }

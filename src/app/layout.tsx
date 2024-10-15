@@ -1,8 +1,7 @@
 import type { FC, PropsWithChildren } from "react";
 import type { Metadata } from "next";
 
-import { NextUIProvider } from "@/providers";
-import { SessionProvider } from "next-auth/react";
+import { NextUIProvider, SessionProvider } from "@/providers";
 import { Toaster } from "@/components/toaster";
 
 import { BASE_URL, SITE_DESCRIPTION, SITE_TITLE } from "@/config/site";

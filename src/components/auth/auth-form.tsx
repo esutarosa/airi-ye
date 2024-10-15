@@ -37,6 +37,7 @@ const AuthForm: FC = () => {
       router.push("/profile");
     } else {
       switch (res.statusCode) {
+        // @ts-expect-error: TypeScript does not recognize 401 as a valid status code in this context.
         case 401:
           setError("password", { message: res.error });
           toast.error(res.error);

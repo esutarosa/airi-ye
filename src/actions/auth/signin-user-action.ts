@@ -5,7 +5,7 @@ import { AuthError } from "next-auth";
 
 type Res =
   | { success: true }
-  | { success: false; error: string; statusCode: 500 };
+  | { success: false; error: string; statusCode: 401 | 500 };
 
 export async function signinUserAction(values: unknown): Promise<Res> {
   try {
