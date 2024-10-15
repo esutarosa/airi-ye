@@ -21,8 +21,8 @@ const Profile: FC = () => {
 
   return (
     <Container centered>
-      <Card className="max-w-[520px] w-full">
-        <CardHeader className="justify-between gap-4">
+      <Card className="">
+        <CardHeader className="justify-between gap-5">
           <div className="flex gap-5">
             <Avatar
               isBordered
@@ -58,18 +58,12 @@ const Profile: FC = () => {
               color="danger"
             >
               <Trash className="size-4" />
-              <span className="hidden md:inline">Видалити</span>
             </Button>
           </div>
         </CardHeader>
         <CardBody className="px-3 py-0 text-small text-default-400"></CardBody>
         <CardFooter className="gap-3">
-          <Button
-            color="danger"
-            size="sm"
-            variant="flat"
-            onClick={clickHandler}
-          >
+          <Button color="danger" size="sm" onClick={clickHandler}>
             Sign Out
           </Button>
         </CardFooter>
