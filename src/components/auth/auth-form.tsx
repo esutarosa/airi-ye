@@ -13,10 +13,12 @@ import { Container } from "@/components/layouts";
 import { Mail, KeyRound, Eye, EyeOff } from "lucide-react";
 import { signinUserAction } from "@/actions/auth/signin-user-action";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const AuthForm: FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
+  const router = useRouter();
 
   const { register, handleSubmit, setError, setFocus, formState } =
     useForm<AuthFormInput>({
@@ -32,7 +34,7 @@ const AuthForm: FC = () => {
     const res = await signinUserAction(values);
 
     if (res.success) {
-      window.location.href = "/profile";
+      router.push("/profile");
     } else {
       switch (res.statusCode) {
         case 401:
