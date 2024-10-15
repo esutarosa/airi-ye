@@ -3,64 +3,77 @@
 import type { FC } from "react";
 import { Container } from "@/components/layouts";
 import { useProfile } from "@/providers/profile-provider";
-import { Image } from "@nextui-org/image";
 import { Button } from "@nextui-org/button";
+import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
+import { Avatar } from "@nextui-org/avatar";
 import { Trash, Images } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { signoutUserAction } from "@/actions/auth/signout-user-action";
 
 const Profile: FC = () => {
   const { session } = useProfile();
+  const router = useRouter();
+
+  const clickHandler = async () => {
+    await signoutUserAction();
+    router.push("/auth");
+  };
 
   return (
-    <Container>
-      <div className="flex flex-col space-y-2 border-b border-content1 pb-6">
-        <h1 className="text-xl font-bold tracking-tight">Обліковий запис</h1>
-        <p className="text-default-400">
-          Справжня інформація та активності вашої власності.
-        </p>
-      </div>
-      <div className="flex items-center space-y-2 py-6 justify-between border-b border-content1">
-        <div className="flex items-center gap-4">
-          <Image
-            src="/images/user-default.jpg"
-            alt="Nyan!"
-            className="w-20 rounded-full"
-          />
-          <div className="flex flex-col">
-            <h3 className="font-semibold">Фото профілю</h3>
-            <p className="text-sm text-default-400">
-              Однак ти нічого не зробиш з цим (поки що).
-            </p>
+    <Container centered>
+      <Card className="max-w-[520px] w-full">
+        <CardHeader className="justify-between gap-4">
+          <div className="flex gap-5">
+            <Avatar
+              isBordered
+              radius="full"
+              size="md"
+              src="/images/user-default.jpg"
+            />
+            <div className="flex flex-col gap-1 items-start justify-center">
+              <h4 className="text-small font-semibold leading-none text-default-600">
+                {session?.user?.name}
+              </h4>
+              <h5 className="text-small tracking-tight text-default-400">
+                {session?.user?.email}
+              </h5>
+            </div>
           </div>
-        </div>
-        <div className="flex gap-2">
-          <Button isDisabled variant="ghost">
-            <Images className="size-4" />
-            Завантажити зображення
+          <div className="flex gap-2">
+            <Button
+              isDisabled
+              size="sm"
+              color="default"
+              radius="full"
+              variant="ghost"
+            >
+              <Images className="size-4" />
+              <span className="hidden md:inline">Завантажити</span>
+            </Button>
+            <Button
+              isDisabled
+              size="sm"
+              radius="full"
+              variant="bordered"
+              color="danger"
+            >
+              <Trash className="size-4" />
+              <span className="hidden md:inline">Видалити</span>
+            </Button>
+          </div>
+        </CardHeader>
+        <CardBody className="px-3 py-0 text-small text-default-400"></CardBody>
+        <CardFooter className="gap-3">
+          <Button
+            color="danger"
+            size="sm"
+            variant="flat"
+            onClick={clickHandler}
+          >
+            Sign Out
           </Button>
-          <Button isDisabled variant="bordered" color="danger">
-            <Trash className="size-4" />
-            Видалити
-          </Button>
-        </div>
-      </div>
-      <div className="flex flex-col space-y-2 py-6">
-        <h2 className="text-xl font-bold tracking-tight">
-          Особиста інформація
-        </h2>
-        <p className="text-default-400">
-          У цьому розділі наведена основна інформація про твiй профіль.
-        </p>
-        <div className="flex gap-4 pt-4">
-          <div className="flex flex-col">
-            <h3 className="font-semibold">Імя</h3>
-            <p className="text-default-400">{session?.user?.name}</p>
-          </div>
-          <div className="flex flex-col">
-            <h3 className="font-semibold">Пошта</h3>
-            <p className="text-default-400">{session?.user?.email}</p>
-          </div>
-        </div>
-      </div>
+        </CardFooter>
+      </Card>
     </Container>
   );
 };
