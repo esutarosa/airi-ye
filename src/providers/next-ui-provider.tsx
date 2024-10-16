@@ -17,7 +17,12 @@ const NextUIProvider: FC<NextUIProviderProps> = ({ children, themeProps }) => {
 
   return (
     <UIProvider navigate={router.push}>
-      <NextThemesProvider defaultTheme="dark" attribute="class" {...themeProps}>
+      <NextThemesProvider
+        defaultTheme="dark"
+        forcedTheme="dark"
+        attribute="class"
+        {...themeProps}
+      >
         {children}
       </NextThemesProvider>
     </UIProvider>
