@@ -7,16 +7,14 @@ import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Avatar } from "@nextui-org/avatar";
 import { Trash, Images } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { signoutUserAction } from "@/actions/auth/signout-user-action";
 
 const Profile: FC = () => {
   const { session } = useProfile();
-  const router = useRouter();
 
   const clickHandler = async () => {
     await signoutUserAction();
-    router.push("/auth");
+    window.location.href = "/auth";
   };
 
   return (

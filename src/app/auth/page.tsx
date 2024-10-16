@@ -1,28 +1,7 @@
-"use client";
-
 import type { FC } from "react";
 import { AuthForm } from "@/components/auth";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { Loader } from "@/components/loader";
 
 const AuthPage: FC = () => {
-  const session = useSession();
-  const router = useRouter();
-
-  switch (session.status) {
-    case "loading":
-      return <Loader />;
-    case "unauthenticated":
-      return <Auth />;
-    case "authenticated":
-      router.push("/");
-    default:
-      return null;
-  }
-};
-
-const Auth: FC = () => {
   return (
     <div className="z-10 w-full max-w-md overflow-hidden rounded-2xl shadow-xl">
       <div className="flex flex-col items-center justify-center space-y-3 border-b border-content1 bg-content1/50 px-4 py-6 pt-8 text-center sm:px-8">

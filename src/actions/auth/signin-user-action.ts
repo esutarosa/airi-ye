@@ -11,9 +11,8 @@ export async function signinUserAction(values: unknown): Promise<Res> {
   try {
     if (
       typeof values !== "object" ||
-      !values ||
-      !("email" in values) ||
-      !("password" in values)
+      values === null ||
+      Array.isArray(values)
     ) {
       throw new Error("Invalid JSON Object");
     }
