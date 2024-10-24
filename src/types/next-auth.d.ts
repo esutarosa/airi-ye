@@ -1,4 +1,3 @@
-// import type { AdapterUser as DefaultAdapterUser } from "@auth/core/adapters";
 import type { JWT as DefaultJWT } from "next-auth/jwt";
 import type { User as DefaultUser } from "next-auth";
 
@@ -17,9 +16,3 @@ declare module "next-auth/jwt" {
     role: (typeof users.$inferSelect)["role"];
   }
 }
-
-// declare module "@auth/core/adapters" {
-//  export interface AdapterUser extends DefaultAdapterUser {
-//    role: (typeof users.$inferSelect)["role"];
-//  }
-//}
