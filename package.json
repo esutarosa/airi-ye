@@ -13,8 +13,8 @@
     "db:push": "drizzle-kit push"
   },
   "dependencies": {
-    "@auth/core": "^0.34.1",
-    "@auth/drizzle-adapter": "^1.4.1",
+    "@auth/core": "^0.37.2",
+    "@auth/drizzle-adapter": "^1.7.2",
     "@hookform/resolvers": "^3.9.0",
     "@neondatabase/serverless": "^0.9.4",
     "@nextui-org/accordion": "^2.0.40",
